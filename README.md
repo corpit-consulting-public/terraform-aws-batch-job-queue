@@ -8,11 +8,13 @@ Provides a Batch Job Queue resource.
 ## Usage
 
 ```hcl
-module "batch-queue" {
-  name                 = "${var.name}"
-  state                = "${var.state}"
-  priority             = "${var.priority}"
-  compute_environments = ["${var.compute_environments}"]
+module "cdata_extract_priority_job_queue" {
+  source               = "corpit-consulting-public/batch-job-queue-mod/aws"
+  version              = "v2.0.0"
+  name                 = "job-queue"
+  priority             = "1"
+  compute_environments = [module.batch.arn]
+  state                = "ENABLED"
 }
 
 ```
@@ -23,7 +25,7 @@ If you want to update README.md file, run that script while being in 'hooks' fol
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| compute\_environments | Specifies the set of compute environments mapped to a job queue and their order. The position of the compute environments in the list will dictate the order. You can associate up 3 compute environments with a job queue | list | n/a | yes |
+| compute\_environments | Specifies the set of compute environments mapped to a job queue and their order. The position of the compute environments in the list will dictate the order. You can associate up 3 compute environments with a job queue | list(string) | n/a | yes |
 | name | Specifies the name of the job queue | string | n/a | yes |
 | priority | The priority of the job queue. Job queues with a higher priority are evaluated first when associated with the same compute environment | string | n/a | yes |
 | state | The state of the job queue. Must be one of ENABLED or DISABLED | string | n/a | yes |

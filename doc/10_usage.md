@@ -1,11 +1,13 @@
 ## Usage
 
 ```hcl
-module "batch-queue" {
-  name                 = "${var.name}"
-  state                = "${var.state}"
-  priority             = "${var.priority}"
-  compute_environments = ["${var.compute_environments}"]
+module "cdata_extract_priority_job_queue" {
+  source               = "corpit-consulting-public/batch-job-queue-mod/aws"
+  version              = "v2.0.0"
+  name                 = "job-queue"
+  priority             = "1"
+  compute_environments = [module.batch.arn]
+  state                = "ENABLED"
 }
 
 ```
